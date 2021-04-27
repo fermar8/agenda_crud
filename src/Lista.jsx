@@ -13,6 +13,8 @@ const Lista = (props) => {
           <td>{contacto.id}</td>
           <td>{contacto.nombre}</td>
           <td>{contacto.email}</td>
+          <td>{contacto.telefono}</td>
+          <td><img style={{width: "60px", height: "40px"}} src={contacto.imagen} alt=""></img></td>
           <td>
             <Link className="btn btn-primary" to={"/modifica/" + contacto.id}>Editar</Link>
           </td>
@@ -33,6 +35,8 @@ const Lista = (props) => {
           <th>#</th>
           <th>Nombre</th>
           <th>Email</th>
+          <th>Teléfono</th>
+          <th>Imagen</th>
           <th></th>
           <th></th>
         </tr>

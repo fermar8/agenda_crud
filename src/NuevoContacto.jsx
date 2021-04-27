@@ -7,6 +7,8 @@ import { Row, Col } from "reactstrap";
 const NuevoContacto = (props) => {
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
+  const [telefono, setTelefono] = useState("");
+  const [imagen, setImagen] = useState("");
   const [volver, setVolver] = useState(false);
 
   //método activado al enviar el form (submit)
@@ -18,6 +20,8 @@ const NuevoContacto = (props) => {
     props.nuevoContacto({
       nombre,
       email,
+      telefono,
+      imagen
     });
 
     setVolver(true);
@@ -54,6 +58,24 @@ const NuevoContacto = (props) => {
                 id="emailInput"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="telefonoInput">Teléfono</Label>
+              <Input
+                type="text"
+                id="telefonoInput"
+                value={telefono}
+                onChange={(e) => setTelefono(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="imagenInput">Link de la imagen</Label>
+              <Input
+                type="text"
+                id="imagenInput"
+                value={imagen}
+                onChange={(e) => setImagen(e.target.value)}
               />
             </FormGroup>
           </Col>

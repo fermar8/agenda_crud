@@ -18,45 +18,27 @@ import './App.css';
 
 
 
-const contactosInicio = [
-  {
-    id: 1,
-    nombre: "indiana",
-    email: "indiana@jones.com"
-  },
-  {
-    id: 2,
-    nombre: "007",
-    email: "bond@james.bond"
-  },
-  {
-    id: 3,
-    nombre: "spiderman",
-    email: "peter@parker.com"
-  }
-];
-
-
 // clase App 
 const App = () => {
 
-  const [contactos, setContactos] = useState(contactosInicio);
+  const [contactos, setContactos] = useState(loadData());
 
 
 // //extra guardado de datos
-// saveData(){
-//   var jsonData = JSON.stringify(state);
-//   localStorage.setItem("datagenda", jsonData);
-// }
+function saveData(contactosAGuardar){
+  var jsonData = JSON.stringify(contactosAGuardar);
+  localStorage.setItem("datagenda", jsonData);
+}
 
 // //carga de datos
-// loadData(){
-//   var text = localStorage.getItem("datagenda");
-//   if (text) {
-//     var obj = JSON.parse(text);
-//     setState(obj);
-//   }
-// }
+function loadData(){
+    var text = localStorage.getItem("datagenda");
+    if (text) {
+    var obj = JSON.parse(text);
+    return obj;
+}
+return [];
+}
 
 
 function guardaContacto(contacto) {
@@ -66,22 +48,40 @@ function guardaContacto(contacto) {
   nuevaLista.push(contacto);
   //asignamos a contactos
   setContactos(nuevaLista);
+  saveData(nuevaLista);
 }
 
 function nuevoContacto(contacto) {
   // s miramos el id del ultimo contacto y sumamos 1 
-  contacto.id = contactos[contactos.length-1].id + 1 ;
+  const maxId = contactos.sort(function(a, b) {
+    return b.id - a.id;
+  });
+  contacto.id = contactos.length < 1 ? 1 : maxId[0].id + 1 ;
+
   const nuevaLista = [...contactos, contacto];
+
+  const sortedNova = nuevaLista.sort(function(a, b) {
+      return a.id - b.id
+  });
+  
   //asignamos a contactos
-  setContactos(nuevaLista);
+  setContactos(sortedNova);
+  saveData(nuevaLista)
 }
 
 
 function eliminaContacto(idEliminar) {
   //creamos lista a partir de contactos, sin el contacto con el id recibido
   const nuevaLista = contactos.filter(el => el.id !== idEliminar);
+  const sortedNueva = nuevaLista.sort(function(a, b) {
+      return a.id - b.id
+  })
+  sortedNueva.forEach((el, i ) => {
+      return el.id = i + 1;
+  })
   //asignamos a contactos
   setContactos(nuevaLista);
+  saveData(nuevaLista)
 
 }
 
@@ -110,11 +110,14 @@ function eliminaContacto(idEliminar) {
             </Switch>
           </Col>
         </Row>
-
-        {/* <Row>
-          <Button onClick={loadData}>Cargar datos</Button>
-          <Button onClick={saveData}>Guardar datos</Button>
-        </Row> */}
+  
+  {/*
+        <Row>
+          <Col>
+            <Button className="btn-primary" onClick={loadData}>Cargar datos</Button>
+            <Button className="btn-success" onClick={saveData}>Guardar datos</Button>
+          </Col>
+        </Row>    */}
 
       </Container>
     </BrowserRouter>

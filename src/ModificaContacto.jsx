@@ -10,6 +10,8 @@ const ModificaContacto = (props) => {
 
   const [nombre, setNombre] = useState(contacto.nombre);
   const [email, setEmail] = useState(contacto.email);
+  const [telefono, setTelefono] = useState(contacto.telefono);
+  const [imagen, setImagen] = useState(contacto.imagen)
   const [volver, setVolver] = useState(false);
 
   //método activado al enviar el form (submit)
@@ -20,6 +22,8 @@ const ModificaContacto = (props) => {
       id,
       nombre,
       email,
+      telefono,
+      imagen
     });
     setVolver(true);
   }
@@ -55,6 +59,24 @@ const ModificaContacto = (props) => {
                 id="emailInput"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="telefonoInput">Teléfono</Label>
+              <Input
+                type="text"
+                id="telefonoInput"
+                value={telefono}
+                onChange={(e) => setTelefono(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="telefonoInput">Link de la imagen</Label>
+              <Input
+                type="text"
+                id="imagenInput"
+                value={imagen}
+                onChange={(e) => setImagen(e.target.value)}
               />
             </FormGroup>
           </Col>
